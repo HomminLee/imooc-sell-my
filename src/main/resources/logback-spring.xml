@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <!--控制台输出-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--控制台输出策略-->
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!--info级别文件日志-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--过滤error级别的日志（不输出）-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <!--以下两个过滤策略含义可在LevelFilter源码中查到-->
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+        <!--输出策略-->
+        <pattern>
+            %d - %msg%n
+        </pattern>
+    </encoder>
+        <!--具体滚动输出方式（文件路径；每日输出一个文件）-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/Users/hommin/Documents/document/my-log/sell-info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--error级别文件日志-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--只输出error级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <encoder>
+            <!--输出策略-->
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n
+            </pattern>
+        </encoder>
+        <!--具体滚动输出方式（文件路径；每日输出一个文件）-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/Users/hommin/Documents/document/my-log/sell-error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--定义所有文件的输出级别-->
+    <!--不能再定义一个<root level="error"> ，否则会覆盖info级别的root，就变成了fileInfoLog和console都是error级别的输出-->
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+</configuration>
