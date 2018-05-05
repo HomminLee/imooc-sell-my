@@ -1,11 +1,15 @@
 package com.hommin.study.imoocsell.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hommin.study.imoocsell.enums.ProductStatusEnum;
+import com.hommin.study.imoocsell.utils.EnumUtil;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 商品
@@ -40,5 +44,14 @@ public class ProductInfo {
 
     /** 类目编号. */
     private Integer categoryType;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum(){
+        return EnumUtil.getEnumByCode(productStatus, ProductStatusEnum.class);
+    }
 
 }
