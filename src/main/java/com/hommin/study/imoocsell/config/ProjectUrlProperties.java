@@ -16,4 +16,6 @@ public class ProjectUrlProperties {
     private String wechatOpenAuthorize;
 
     private String sell;
+
+    private String seller;
 }

@@ -14,6 +14,9 @@ spring:
     url: jdbc:mysql://192.168.1.120/sell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  redis:
+    host: 192.168.1.120
+    port: 6379
 server:
   context-path: /sell
 
@@ -23,6 +26,7 @@ imooc:
       wechatMpAuthorize: http://hommin-sell.natapp1.cc/
       wechatOpenAuthorize: http://hommin-sell.natapp1.cc/
       sell: http://hommin-sell.natapp1.cc/sell/
+      seller: http://localhost:8080/
     wechat:
       appid: wx48458d7156023188
       appsecret: 3aca041bf480ca1325e7bf3ce14afe89
@@ -32,3 +36,4 @@ imooc:
       mchKey: xxxxxxxxx
       keyPath: /var/weixin_cert/h5.p12
       notifyUrl: http://hommin-sell.natapp1.cc/sell/pay/notify
+
