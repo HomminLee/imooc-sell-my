@@ -19,10 +19,15 @@ server:
 
 imooc:
   sell:
-    address: http://hommin-sell.natapp1.cc/sell/
+    projectUrl:
+      wechatMpAuthorize: http://hommin-sell.natapp1.cc/
+      wechatOpenAuthorize: http://hommin-sell.natapp1.cc/
+      sell: http://hommin-sell.natapp1.cc/sell/
     wechat:
       appid: wx48458d7156023188
       appsecret: 3aca041bf480ca1325e7bf3ce14afe89
+      openid: adfadfadf
+      opensecret: adfadfadfadsfasdf
       mchId: 148xxxxxxxx
       mchKey: xxxxxxxxx
       keyPath: /var/weixin_cert/h5.p12

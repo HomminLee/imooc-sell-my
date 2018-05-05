@@ -17,6 +17,10 @@ public class WechatAccountProperties {
 
     private String appsecret;
 
+    private String openid;
+
+    private String opensecret;
+
     private String mchId;
 
     private String mchKey;

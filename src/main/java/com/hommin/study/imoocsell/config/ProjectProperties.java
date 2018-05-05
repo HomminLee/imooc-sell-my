@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "imooc.sell")
-public class ProjectPorperties {
+public class ProjectProperties {
 
-    private String address;
+    private ProjectUrlProperties projectUrl;
 
     /**   微信账号参数   */
     private WechatAccountProperties wechat;

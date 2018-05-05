@@ -3,7 +3,7 @@ package com.hommin.study.imoocsell.config;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpServiceImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class WechatConfig {
 
     @Autowired
-    private ProjectPorperties projectPorperties;
+    private ProjectProperties projectProperties;
 
     @Bean
     public WxMpService wxMpService(){
@@ -30,8 +30,23 @@ public class WechatConfig {
     @Bean
     public WxMpConfigStorage wxMpConfigStorag(){
         WxMpConfigStorage wxMpConfigStorag = new WxMpInMemoryConfigStorage();
-        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setAppId(projectPorperties.getWechat().getAppid());
-        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setSecret(projectPorperties.getWechat().getAppsecret());
+        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setAppId(projectProperties.getWechat().getAppid());
+        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setSecret(projectProperties.getWechat().getAppsecret());
+        return wxMpConfigStorag;
+    }
+
+    @Bean
+    public WxMpService wxOpenService(){
+        WxMpService wxOpenService = new WxMpServiceImpl();
+        wxMpService().setWxMpConfigStorage(wxOpenConfigStorage());
+        return wxOpenService;
+    }
+
+    @Bean
+    public WxMpConfigStorage wxOpenConfigStorage(){
+        WxMpConfigStorage wxMpConfigStorag = new WxMpInMemoryConfigStorage();
+        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setAppId(projectProperties.getWechat().getOpenid());
+        ((WxMpInMemoryConfigStorage) wxMpConfigStorag).setSecret(projectProperties.getWechat().getOpensecret());
         return wxMpConfigStorag;
     }
 
