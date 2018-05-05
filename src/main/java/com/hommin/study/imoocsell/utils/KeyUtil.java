@@ -19,4 +19,9 @@ public class KeyUtil {
 
         return System.currentTimeMillis() + String.valueOf(number);
     }
+
+    public static void main(String[] args) {
+        String s = KeyUtil.genUniqueKey();
+        System.out.println(s);
+    }
 }
