@@ -1,7 +1,11 @@
 package com.hommin.study.imoocsell.utils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * cookie工具类
@@ -27,7 +31,26 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    public static void get() {
+    public static Cookie get(HttpServletRequest request, String name) {
+        Map<String, Cookie> cookieMap = readCookieMap(request);
+        if(cookieMap.containsKey(name)){
+            return cookieMap.get(name);
+        } else {
+            return null;
+        }
+    }
 
+    /**
+     * 将cookie读取出来, 封装为一个map 方便查找
+     * @param request
+     * @return
+     */
+    private static Map<String , Cookie> readCookieMap(HttpServletRequest request){
+        HashMap<String , Cookie> cookieMap = new HashMap<>(10);
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            cookieMap.put(cookie.getName(), cookie);
+        }
+        return cookieMap;
     }
 }

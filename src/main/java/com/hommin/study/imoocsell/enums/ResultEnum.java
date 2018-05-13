@@ -45,6 +45,8 @@ public enum ResultEnum {
     PRODUCT_STATUS_ERROR(24, "订单状态异常"),
 
     LOGIN_FAIL(25, "登录失败, 登录信息不正确"),
+
+    LOGOUT_SUCCESS(26, "登出成功"),
     ;
 
     private Integer code;

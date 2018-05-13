@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +59,23 @@ public class SellerUserController {
         // 3. 将token写回浏览器(cookie)
         CookieUtil.set(response, CookieConstant.TOKEN, token, CookieConstant.EXPIRE);
         return "redirect:" + projectProperties.getProjectUrl().getSeller() + "/sell/seller/order/list";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response, Model model) {
+        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+        if(cookie != null){
+            // redis设置超时
+            stringRedisTemplate.opsForValue().getOperations().delete(String.format(RedisConstant.TOKEN_PREFIX, cookie.getValue()));
+
+            // cookie设置失效
+            CookieUtil.set(response, cookie.getName(), null, 0);
+
+        }
+        // 跳转登录页面(扫码页面)
+        model.addAttribute("msg", ResultEnum.LOGOUT_SUCCESS.getMessage());
+        model.addAttribute("url", "/sell/seller/order/list");
+        return "common/success";
     }
 
 }
