@@ -15,6 +15,7 @@ import com.hommin.study.imoocsell.repository.OrderMasterRepository;
 import com.hommin.study.imoocsell.sevice.OrderService;
 import com.hommin.study.imoocsell.sevice.PaySerivce;
 import com.hommin.study.imoocsell.sevice.ProductService;
+import com.hommin.study.imoocsell.sevice.PushMessageService;
 import com.hommin.study.imoocsell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -56,6 +57,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PaySerivce paySerivce;
+
+    @Autowired
+    private PushMessageService pushMessageService;
 
 
     @Override
@@ -191,6 +195,10 @@ public class OrderServiceImpl implements OrderService {
             logger.error("【完结订单】更新失败, orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+
+        //推送微信模版消息
+        pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }
