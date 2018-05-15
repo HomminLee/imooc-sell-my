@@ -8,7 +8,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @author Hommin
  * 2018年05月14日 下午9:19
  */
-@Component
+//@Component
 public class WebSocketConfig {
 
     @Bean
