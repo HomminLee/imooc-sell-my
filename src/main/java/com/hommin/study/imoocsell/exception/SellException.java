@@ -1,6 +1,7 @@
 package com.hommin.study.imoocsell.exception;
 
 import com.hommin.study.imoocsell.enums.ResultEnum;
+import lombok.Getter;
 
 /**
  * @author Hommin
@@ -8,6 +9,7 @@ import com.hommin.study.imoocsell.enums.ResultEnum;
  * @Description:
  * @data 2018年04月09日 上午9:45
  */
+@Getter
 public class SellException extends RuntimeException {
 
     private Integer code;
