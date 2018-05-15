@@ -7,6 +7,7 @@ import com.hommin.study.imoocsell.exception.SellException;
 import com.hommin.study.imoocsell.form.OrderForm;
 import com.hommin.study.imoocsell.sevice.BuyerService;
 import com.hommin.study.imoocsell.sevice.OrderService;
+import com.hommin.study.imoocsell.sevice.WebSocketService;
 import com.hommin.study.imoocsell.utils.ResultVOUtil;
 import com.hommin.study.imoocsell.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,9 @@ public class BuyerOrderController {
     @SuppressWarnings("all")
     private BuyerService buyerService;
 
+    @Autowired
+    private WebSocketService webSocketService;
+
     // 创建订单
     @PostMapping("/create")
     public ResultVO<Map<String, String>> createOrder(@Valid OrderForm orderForm, BindingResult result){
@@ -60,6 +64,10 @@ public class BuyerOrderController {
 
         Map<String, String> map = new HashMap<>();
         map.put("orderId", createResult.getOrderId());
+
+        // 发送websocket消息
+        webSocketService.sendMessage(String.format("您有新的订单, 订单号为%s", orderDTO.getOrderId()));
+
 
         return ResultVOUtil.success(map);
 
